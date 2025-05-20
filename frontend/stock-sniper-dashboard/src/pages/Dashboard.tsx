@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import PicksTable from '../components/PicksTable';
 import PositionsTable from '../components/PositionsTable';
+import SectorPerformance from '../components/SectorPerformance';
 
 const Dashboard: React.FC = () => {
   const [picks, setPicks] = useState([]);
   const [positions, setPositions] = useState([]);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:5000/picks')
+    axios.get('http://127.0.0.1:5001/picks')
       .then((response) => setPicks(response.data))
       .catch((error) => console.error('Error fetching picks:', error));
 
-    axios.get('http://127.0.0.1:5000/positions')
+    axios.get('http://127.0.0.1:5001/positions')
       .then((response) => setPositions(response.data))
       .catch((error) => console.error('Error fetching positions:', error));
   }, []);
@@ -31,8 +32,8 @@ const Dashboard: React.FC = () => {
           <PicksTable type="manual" picks={picks} />
         </div>
         <div className="card">
-          <h3>Explanation</h3>
-          <p>No shit or pain trades, only quality trades that match our strategy</p>
+          <h2>Market Sectors</h2>
+          <SectorPerformance />
         </div>
       </div>
 

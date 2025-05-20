@@ -1,13 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap');
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Import SF Pro Display font */
+@font-face {
+  font-family: 'SF Pro Display';
+  src: local('SF Pro Display'),
+       local('SFProDisplay-Regular'),
+       local('-apple-system');
+  font-weight: normal;
+  font-style: normal;
+}
 
 body,
 h1, h2, h3, h4, h5, h6,
 p, span, div, button, input, table, th, td {
-  font-family: 'Architects Daughter', cursive !important;
+  font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
 }
 
 * {
-  font-family: 'Architects Daughter', cursive !important;
+  font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
 }
 
 :root {
@@ -64,6 +76,11 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Ensure icons use Font Awesome */
+.fas, .far, .fab, .fa {
+  font-family: 'Font Awesome 6 Free' !important;
 }
 
 @media (prefers-color-scheme: light) {
