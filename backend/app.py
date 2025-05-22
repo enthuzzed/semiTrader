@@ -277,19 +277,7 @@ def fetch_twitter_stocks():
 
 def get_stock_data(tickers):
     stock_data = {}
-    session = None
     try:
-        # Create a new session with increased pool size
-        session = requests.Session()
-        adapter = requests.adapters.HTTPAdapter(
-            pool_connections=20,
-            pool_maxsize=20,
-            max_retries=3,
-            pool_block=False
-        )
-        session.mount('http://', adapter)
-        session.mount('https://', adapter)
-        
         # Process tickers in smaller batches
         batch_size = 2
         for i in range(0, len(tickers), batch_size):
@@ -302,8 +290,8 @@ def get_stock_data(tickers):
                 
                 for attempt in range(retries):
                     try:
-                        # Create ticker with custom session
-                        stock = yf.Ticker(ticker, session=session)
+                        # Create ticker without custom session, let yfinance handle it
+                        stock = yf.Ticker(ticker)
                         
                         # First try to get fast_info data (most reliable and efficient)
                         try:
@@ -367,9 +355,6 @@ def get_stock_data(tickers):
             
     except Exception as e:
         logger.error(f"Global error in get_stock_data: {str(e)}")
-    finally:
-        if session:
-            session.close()
             
     return stock_data
 
@@ -549,8 +534,8 @@ def get_trades():
 @app.route('/continue-iteration', methods=['POST'])
 def continue_iteration():
     try:
-        # Trigger the next iteration of AI analysis
-        ai_trader.continue_iteration()
+        # For now, just fetch new Twitter data and update picks
+        fetch_twitter_stocks()
         return jsonify({"message": "Iteration started successfully"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
